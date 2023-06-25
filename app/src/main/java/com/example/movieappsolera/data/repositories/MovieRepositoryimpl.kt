@@ -25,6 +25,10 @@ class MovieRepositoryimpl @Inject constructor(private val movieDataProviders : M
         return movieDataProviders.getMovieByName(apiKey, name).toDomainMovieList()
     }
 
+    override suspend fun getMovieByIdFromLocal(id : Int): MovieDetailModel {
+        return movieDataProviders.getMovieByIdFromLocal(id).toDomainMovieList()
+    }
+
     override suspend fun getMovieListFromLocal(): List<MovieDetailModel> {
         val response : List<MovieEntity> = movieDataProviders.getMovieListFavorites()
 

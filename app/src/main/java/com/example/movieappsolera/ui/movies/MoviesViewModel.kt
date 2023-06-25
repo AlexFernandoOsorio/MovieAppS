@@ -18,10 +18,10 @@ class MoviesViewModel @Inject constructor(): ViewModel(){
 
     @Inject
     lateinit var GetMovieListFromApiUseCase: GetMovieListFromApiUseCase
-
     @Inject
     lateinit var GetMoviesByNameFromApiUseCase: GetMoviesByNameFromApiUseCase
 
+    //Inicializo las variables  a utilizar en el fragment
     private var _moviesListModel = MutableLiveData<List<MovieModel>>()
     var moviesListModel: MutableLiveData<List<MovieModel>> = _moviesListModel
 
@@ -31,6 +31,8 @@ class MoviesViewModel @Inject constructor(): ViewModel(){
     private var _isError = MutableLiveData<Boolean>()
     var isError: MutableLiveData<Boolean> = _isError
 
+
+    //Obtengo la lista de peliculas populares del API
     fun getMovieListPopularFromApi(apiKey : String) {
         viewModelScope.launch() {
             _moviesListModel.postValue(emptyList())
@@ -58,6 +60,7 @@ class MoviesViewModel @Inject constructor(): ViewModel(){
         }
     }
 
+    //Obtengo la lista de peliculas por nombre del API
     fun getMovieListByNameFromApi(apiKey : String,name : String) {
         viewModelScope.launch() {
             _moviesListModel.postValue(emptyList())

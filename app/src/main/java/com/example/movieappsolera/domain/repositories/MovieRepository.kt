@@ -13,7 +13,7 @@ interface MovieRepository {
     suspend fun getMovieByNameFromRemote(apiKey: String, name: String): List<MovieModel>
     suspend fun getMovieListFromLocal(): List<MovieDetailModel>
 
-
+    suspend fun getMovieByIdFromLocal(id : Int): MovieDetailModel
     suspend fun insertMovieToLocal(movie : MovieDetailModel)
 
     suspend fun deleteMovieFromLocal(movie : MovieDetailModel)

@@ -18,6 +18,8 @@ class MovieDataProviders @Inject constructor(private val apiServiceMovie: ApiSer
 
     suspend fun getMovieListFavorites() = movieDao.getAllMovies()
 
+    suspend fun getMovieByIdFromLocal(id : Int) = movieDao.getMovieById(id)
+
     suspend fun insertMovie(movie : MovieEntity){
         movieDao.insertMovie(movie)
     }

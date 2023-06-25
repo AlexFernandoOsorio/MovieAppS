@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.movieappsolera.BuildConfig
 import com.example.movieappsolera.R
 import com.example.movieappsolera.databinding.FragmentMovieDetailBinding
 import com.example.movieappsolera.domain.model.MovieDetailModel
@@ -22,9 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
 
+    //Inicializamos binding y viewModel
     private lateinit var binding : FragmentMovieDetailBinding
     private val viewModel: MovieDetailViewModel by viewModels()
-
+    //Inicializamos variables
     private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +46,14 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //Llamamos a la API para obtener los datos de la pelicula seleccionada por Id
         viewModel.getMovieByIdFromApi(requireArguments().getInt("id").toString(),api_key)
 
-
+        //Observamos el modelo de datos de la pelicula
         val movieModelObserver = Observer<MovieDetailModel?>{
+            //Funcion let para evitar nullPointerException
             it?.let {
+                //Bloque de codigo para mostrar los datos de la pelicula
                 binding.movieName.text = it.title
                 binding.movieFecha.text = it.release_date
                 binding.movieDescripcion.text = it.description
@@ -62,10 +66,12 @@ class MovieDetailFragment : Fragment() {
                     .load(poster_path + it.image)
                     .centerCrop()
                     .into(binding.movieImage)
+                binding.movieRatingBar.rating = it.popularity.toFloat()
             }
         }
         viewModel.movieModel.observe(viewLifecycleOwner,movieModelObserver)
 
+        //Agregamos o no la pelicula a favoritos
         binding.btnFavorite.setOnClickListener(View.OnClickListener {
             viewModel.insertFavoriteMovie()
             isFavorite = !isFavorite

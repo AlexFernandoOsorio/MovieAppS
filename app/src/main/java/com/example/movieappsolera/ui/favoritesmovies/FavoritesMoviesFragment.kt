@@ -17,10 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FavoritesMoviesFragment : Fragment(), FavoritesMoviesAdapter.OnRecipeClickListener {
 
+    //Inicializamos binding y viewModel
     private lateinit var binding : FragmentFavoritesMoviesBinding
     private val viewModel: FavoritesMoviesViewModel by viewModels()
-
-
     //Inicializamos variables
     private lateinit var moviesAdapter: FavoritesMoviesAdapter
     private lateinit var movies: List<MovieDetailModel>
@@ -42,9 +41,9 @@ class FavoritesMoviesFragment : Fragment(), FavoritesMoviesAdapter.OnRecipeClick
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //Realizamos una consulta a la base de datos para obtener la lista de peliculas favoritas
         viewModel.getMovieListFavoriteFromDb()
-
+        //Bloque de codigo para el reciclerView
         binding.reciclerMoviesFavorites.layoutManager = GridLayoutManager(context, 2)
         //Observamos la lista de peliculas
         val listObserver = Observer<List<MovieDetailModel>>{
@@ -55,7 +54,7 @@ class FavoritesMoviesFragment : Fragment(), FavoritesMoviesAdapter.OnRecipeClick
         }
         viewModel.moviesListModel.observe(viewLifecycleOwner, listObserver)
 
-        //Observamos mensaje de error
+        //Observamos mensaje de error en caso de que la lista este vacia
         val errorObserver = Observer<String>{
             binding.message.text = it
             if (it == ""){
@@ -65,6 +64,7 @@ class FavoritesMoviesFragment : Fragment(), FavoritesMoviesAdapter.OnRecipeClick
         viewModel.errorMessage.observe(viewLifecycleOwner, errorObserver)
     }
 
+    //Funcion para navegar a la pantalla de detalle de pelicula
     override fun onRecipeClick(movieModel: MovieDetailModel, position : Int){
         findNavController().navigate(R.id.action_favoritesMoviesFragment_to_movieDetailFragment, Bundle().apply {
             putInt("id", movieModel.id)

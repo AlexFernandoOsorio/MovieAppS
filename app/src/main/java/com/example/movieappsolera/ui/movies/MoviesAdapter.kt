@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -39,6 +40,7 @@ class MoviesAdapter (private val movies: List<MovieModel>, private val itemRecip
             itemRecipeClickListener.onRecipeClick(movie, position)
         }
 
+        holder.movie_rating.rating = movie.popularity.toFloat()
     }
 
     override fun getItemCount(): Int = movies.size
@@ -48,6 +50,7 @@ class MoviesAdapter (private val movies: List<MovieModel>, private val itemRecip
         val movie_name : TextView = itemView.findViewById(R.id.movie_name)
         val movie_date : TextView = itemView.findViewById(R.id.movie_fecha)
         val movie_image : ImageView = itemView.findViewById(R.id.movie_image)
+        val movie_rating : RatingBar = itemView.findViewById(R.id.movie_ratingBar)
 
     }
 
