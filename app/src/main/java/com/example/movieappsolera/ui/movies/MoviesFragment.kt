@@ -1,6 +1,5 @@
-package com.example.movieappsolera.ui.Movies
+package com.example.movieappsolera.ui.movies
 
-import android.graphics.Movie
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -60,8 +59,10 @@ class MoviesFragment : Fragment(), MoviesAdapter.OnRecipeClickListener {
     }
 
 
-    override fun onRecipeClick(movieListModel: MovieModel, position : Int){
-
+    override fun onRecipeClick(movieModel: MovieModel, position : Int){
+        findNavController().navigate(R.id.action_moviesFragment_to_movieDetailFragment, Bundle().apply {
+            putInt("id", movieModel.id)
+        })
     }
 
 }

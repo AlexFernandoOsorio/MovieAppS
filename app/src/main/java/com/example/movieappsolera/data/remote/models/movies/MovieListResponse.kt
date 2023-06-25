@@ -1,4 +1,6 @@
-package com.example.movieappsolera.data.remote.models
+package com.example.movieappsolera.data.remote.models.movies
+
+import com.example.movieappsolera.data.remote.models.movies.MovieDto
 
 data class MovieListResponse(
     val page: Int,

@@ -19,8 +19,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/movie_image"
-            android:layout_width="80dp"
-            android:layout_height="110dp"
+            android:layout_width="110dp"
+            android:layout_height="150dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
@@ -44,15 +44,24 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Rick" />
 
-
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/movie_fecha"
+            android:id="@+id/movie_lanzamiento"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="@+id/movie_name"
             app:layout_constraintStart_toStartOf="@+id/movie_name"
             app:layout_constraintTop_toBottomOf="@+id/movie_name"
+            android:text="Fecha de Lanzamiento : " />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/movie_fecha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/movie_lanzamiento"
+            app:layout_constraintStart_toStartOf="@+id/movie_lanzamiento"
+            app:layout_constraintTop_toBottomOf="@+id/movie_lanzamiento"
             tools:text="Species" />
 
         <LinearLayout
@@ -66,13 +75,6 @@
             app:layout_constraintStart_toStartOf="@+id/movie_fecha"
             app:layout_constraintTop_toBottomOf="@+id/movie_fecha">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivStatus"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center"
-                tools:srcCompat="@drawable/ic_status_circle_green" />
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
@@ -82,18 +84,6 @@
                 tools:text="Alive" />
 
         </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:stateListAnimator="@animator/animation_like"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/movie_fecha"
-            app:srcCompat="@drawable/ic_favorite" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

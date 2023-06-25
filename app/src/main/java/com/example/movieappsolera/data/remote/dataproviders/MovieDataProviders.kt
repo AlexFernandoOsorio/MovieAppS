@@ -7,4 +7,6 @@ class MovieDataProviders @Inject constructor(private val apiServiceMovie: ApiSer
 
 
     suspend fun getMovieListPopular(apiKey: String) = apiServiceMovie.getMoviesPopular(apiKey)
+
+    suspend fun getMovieById(movieId: String, apiKey: String) = apiServiceMovie.getMoviesById(movieId, apiKey)
 }

@@ -1,4 +1,4 @@
-package com.example.movieappsolera.data.remote.models
+package com.example.movieappsolera.data.remote.models.movies
 
 data class MovieDto(
     val adult: Boolean,
