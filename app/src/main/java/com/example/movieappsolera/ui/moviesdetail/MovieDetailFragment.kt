@@ -62,6 +62,11 @@ class MovieDetailFragment : Fragment() {
             }
         }
         viewModel.movieModel.observe(viewLifecycleOwner,movieModelObserver)
+
+        binding.btnFavorite.setOnClickListener(View.OnClickListener {
+            viewModel.insertFavoriteMovie()
+        })
+
     }
 
 }

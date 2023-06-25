@@ -106,6 +106,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:stateListAnimator="@animator/animation_like"
+            android:tint="@color/blue_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_favorite" />

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.movieappsolera.domain.model.MovieDetailModel
 import com.example.movieappsolera.domain.model.MovieModel
 import com.example.movieappsolera.domain.usecase.GetMovieByIdFromApiUseCase
+import com.example.movieappsolera.domain.usecase.InsertFavoriteMovieToDbUseCase
 import com.example.movieappsolera.utils.UIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,13 +18,16 @@ class MovieDetailViewModel @Inject constructor(): ViewModel(){
     @Inject
     lateinit var GetMovieDetailFromApiUseCase: GetMovieByIdFromApiUseCase
 
+    @Inject
+    lateinit var insertFavoriteMovieToDb : InsertFavoriteMovieToDbUseCase
+
 
     private var _movieModel = MutableLiveData<MovieDetailModel?>()
     var movieModel: MutableLiveData<MovieDetailModel?> = _movieModel
     fun getMovieByIdFromApi(movieId : String ,apiKey : String) {
         viewModelScope.launch() {
             _movieModel.postValue(null)
-            val movieList = GetMovieDetailFromApiUseCase.invoke(movieId,apiKey)
+            val movieList = GetMovieDetailFromApiUseCase(movieId,apiKey)
             movieList.collect {
                 when(it){
                     is UIEvent.Loading -> {
@@ -39,6 +43,12 @@ class MovieDetailViewModel @Inject constructor(): ViewModel(){
                 }
             }
 
+        }
+    }
+
+    fun insertFavoriteMovie() {
+        viewModelScope.launch() {
+            insertFavoriteMovieToDb(movieModel.value!!)
         }
     }
 }

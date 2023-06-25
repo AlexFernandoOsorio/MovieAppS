@@ -2,7 +2,7 @@ package com.example.movieappsolera.domain.model
 
 data class MovieDetailModel(
     val id: Int,
-    val title : String,
+    val title: String,
     val image: String,
     val description: String,
     val popularity: Double,

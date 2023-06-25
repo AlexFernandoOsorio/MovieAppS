@@ -10,4 +10,9 @@ interface MovieRepository {
 
     suspend fun getMovieByIdFromRemote(movieId: String, apiKey: String): MovieDetailModel
 
+    suspend fun getMovieListFromLocal(): List<MovieDetailModel>
+
+
+    suspend fun insertMovieToLocal(movie : MovieDetailModel)
+
 }
