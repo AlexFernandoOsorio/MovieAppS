@@ -7,4 +7,8 @@ object GlobalConstants {
 
     const val poster_path = "https://image.tmdb.org/t/p/w500"
 
+
+    const val noInternet = "No hay conexión a internet"
+    const val noSavedMovies = "No tienes Favoritos guardados"
+    const val noSearchMovies =  "No se encontraron resultados para: "
 }

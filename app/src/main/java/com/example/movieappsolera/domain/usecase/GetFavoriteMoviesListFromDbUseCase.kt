@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetFavoriteMoviesListFromDbUseCase @Inject constructor(private val movieRepository: MovieRepository) {
 
-    suspend fun invoke() : List<MovieDetailModel>{
+    suspend operator fun invoke() : List<MovieDetailModel>{
 
         var lista : List<MovieDetailModel> = movieRepository.getMovieListFromLocal()
 

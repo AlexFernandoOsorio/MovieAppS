@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.movieappsolera.R
 import com.example.movieappsolera.databinding.FragmentMovieDetailBinding
 import com.example.movieappsolera.domain.model.MovieDetailModel
 import com.example.movieappsolera.domain.model.MovieModel
@@ -23,6 +24,8 @@ class MovieDetailFragment : Fragment() {
 
     private lateinit var binding : FragmentMovieDetailBinding
     private val viewModel: MovieDetailViewModel by viewModels()
+
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +68,12 @@ class MovieDetailFragment : Fragment() {
 
         binding.btnFavorite.setOnClickListener(View.OnClickListener {
             viewModel.insertFavoriteMovie()
+            isFavorite = !isFavorite
+            viewModel.isFavorite.postValue(isFavorite)
+            if (isFavorite)
+                binding.btnFavorite.imageTintList = resources.getColorStateList(R.color.red_primary)
+            else
+                binding.btnFavorite.imageTintList = resources.getColorStateList(R.color.blue_primary)
         })
 
     }

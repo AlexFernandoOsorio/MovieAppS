@@ -21,6 +21,9 @@ class MovieRepositoryimpl @Inject constructor(private val movieDataProviders : M
         return movieDataProviders.getMovieById(movieId, apiKey).toDomainMovieDetail()
     }
 
+    override suspend fun getMovieByNameFromRemote(apiKey: String, name: String): List<MovieModel> {
+        return movieDataProviders.getMovieByName(apiKey, name).toDomainMovieList()
+    }
 
     override suspend fun getMovieListFromLocal(): List<MovieDetailModel> {
         val response : List<MovieEntity> = movieDataProviders.getMovieListFavorites()
@@ -40,6 +43,19 @@ class MovieRepositoryimpl @Inject constructor(private val movieDataProviders : M
 
     override suspend fun insertMovieToLocal(movie : MovieDetailModel){
         movieDataProviders.insertMovie(MovieEntity(
+            id = movie.id,
+            name = movie.title,
+            image = movie.image,
+            description = movie.description,
+            popularity = movie.popularity.toString(),
+            release_date = movie.release_date,
+            genre = movie.genre_ids.joinToString(","),
+            isFavorite = true
+        ))
+    }
+
+    override suspend fun deleteMovieFromLocal(movie : MovieDetailModel){
+        movieDataProviders.deleteMovie(MovieEntity(
             id = movie.id,
             name = movie.title,
             image = movie.image,

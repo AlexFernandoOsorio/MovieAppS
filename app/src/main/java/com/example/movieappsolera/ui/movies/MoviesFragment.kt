@@ -1,10 +1,9 @@
 package com.example.movieappsolera.ui.movies
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -24,6 +23,7 @@ class MoviesFragment : Fragment(), MoviesAdapter.OnRecipeClickListener {
     //Inicializamos variables
     private lateinit var moviesAdapter: MoviesAdapter
     private lateinit var movies: List<MovieModel>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,23 +46,58 @@ class MoviesFragment : Fragment(), MoviesAdapter.OnRecipeClickListener {
         viewModel.getMovieListPopularFromApi(api_key)
 
         binding.reciclerMovies.layoutManager = LinearLayoutManager(context)
-        //Observamos la lista de recetas
+        //Observamos la lista de peliculas
         val listObserver = Observer<List<MovieModel>>{
             movies = it
             moviesAdapter = MoviesAdapter(movies, this)
             binding.reciclerMovies.adapter = moviesAdapter
             moviesAdapter.notifyDataSetChanged()
+
+            if (movies.isEmpty()){
+                binding.message.visibility = View.VISIBLE
+            }
         }
         viewModel.moviesListModel.observe(viewLifecycleOwner, listObserver)
 
+        //Observamos mensaje de error
+        val errorObserver = Observer<String>{
+            binding.message.text = it
+            if (it == ""){
+                binding.message.visibility = View.GONE
+            }
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner, errorObserver)
+
+        //Funcion para buscar peliculas con el SearchView
+        setupSearchView()
 
     }
 
 
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.getMovieListByNameFromApi(api_key, query!!)
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                        viewModel.getMovieListByNameFromApi(api_key, newText)
+                }
+                return false
+            }
+        })
+    }
     override fun onRecipeClick(movieModel: MovieModel, position : Int){
-        findNavController().navigate(R.id.action_moviesFragment_to_movieDetailFragment, Bundle().apply {
+        findNavController().navigate(R.id.action_moviesFragment2_to_movieDetailFragment2, Bundle().apply {
             putInt("id", movieModel.id)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.moviesListModel.value = emptyList()
+        viewModel.getMovieListPopularFromApi(api_key)
     }
 
 }

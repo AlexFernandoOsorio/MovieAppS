@@ -6,14 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.movieappsolera.R
 import com.example.movieappsolera.databinding.FragmentFavoritesMoviesBinding
+import com.example.movieappsolera.domain.model.MovieDetailModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoritesMoviesFragment : Fragment() {
+class FavoritesMoviesFragment : Fragment(), FavoritesMoviesAdapter.OnRecipeClickListener {
 
     private lateinit var binding : FragmentFavoritesMoviesBinding
     private val viewModel: FavoritesMoviesViewModel by viewModels()
+
+
+    //Inicializamos variables
+    private lateinit var moviesAdapter: FavoritesMoviesAdapter
+    private lateinit var movies: List<MovieDetailModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +43,32 @@ class FavoritesMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getMovieListFavoriteFromDb()
 
+        binding.reciclerMoviesFavorites.layoutManager = GridLayoutManager(context, 2)
+        //Observamos la lista de peliculas
+        val listObserver = Observer<List<MovieDetailModel>>{
+            movies = it
+            moviesAdapter = FavoritesMoviesAdapter(movies, this)
+            binding.reciclerMoviesFavorites.adapter = moviesAdapter
+            moviesAdapter.notifyDataSetChanged()
+        }
+        viewModel.moviesListModel.observe(viewLifecycleOwner, listObserver)
+
+        //Observamos mensaje de error
+        val errorObserver = Observer<String>{
+            binding.message.text = it
+            if (it == ""){
+                binding.message.visibility = View.GONE
+            }
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner, errorObserver)
     }
 
+    override fun onRecipeClick(movieModel: MovieDetailModel, position : Int){
+        findNavController().navigate(R.id.action_favoritesMoviesFragment_to_movieDetailFragment, Bundle().apply {
+            putInt("id", movieModel.id)
+        })
+    }
 
 }
