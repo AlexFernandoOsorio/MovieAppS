@@ -3,6 +3,10 @@
 
 Aplicacion para realizar consultas sobre peliculas a un API
 
+## Screenshots
+
+![App Screenshot](https://raw.githubusercontent.com/AlexFernandoOsorio/MovieAppChallengeS/main/app/src/main/res/drawable/Screenshot_78.png)
+
 
 ## Features
 
@@ -20,7 +24,3 @@ Aplicacion para realizar consultas sobre peliculas a un API
 
 - [@AlexFernando](https://github.com/AlexFernandoOsorio)
 
-
-## Screenshots
-
-![App Screenshot](https://raw.githubusercontent.com/AlexFernandoOsorio/MovieAppChallengeS/main/app/src/main/res/drawable/Screenshot_78.png)
